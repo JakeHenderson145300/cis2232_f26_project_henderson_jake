@@ -1,0 +1,54 @@
+/*
+ * PocketLedger Personal Expense Tracker
+ * Sprint 1 - theme colors from the BA
+ *
+ * Main Color:      Teal  #00796B
+ * Secondary Color: Light Aqua Blue  #20B2AA
+ *
+ * @author Jake Henderson
+ * @since 20260928
+ */
+
+:root {
+    --main-color: #00796B;
+    --secondary-color: #20B2AA;
+    --dark-neutral: #1a252f;
+    --light-neutral: #f8f9fa;
+}
+
+body {
+    background-color: var(--light-neutral);
+        color: var(--dark-neutral);
+        font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        margin: 0;
+        height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+    color: var(--main-color);
+    margin: 0;
+    padding: 0 20px;
+}
+
+p {
+    font-size: 1.25rem;
+    color: #555555;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* The underline uses the secondary colour so both theme colours are shown */
+.title-underline {
+    width: 220px;
+        height: 6px;
+        background-color: var(--secondary-color);
+        margin-top: 25px;
+        border-radius: 3px;
+}
