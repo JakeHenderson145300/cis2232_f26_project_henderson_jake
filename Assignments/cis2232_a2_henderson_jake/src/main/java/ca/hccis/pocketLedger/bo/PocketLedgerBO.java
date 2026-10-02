@@ -5,6 +5,7 @@ import ca.hccis.pocketLedger.entity.Expense;
 import java.util.ArrayList;
 
 public class PocketLedgerBO {
+    //Set at $2000 for now as a static placeholder. Plans to make this non-static later
     private static final double BUDGET_BASELINE = 2000.00;
 
     public double calculate(Expense expense) {

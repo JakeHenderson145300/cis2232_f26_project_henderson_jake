@@ -5,12 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Unit tests validating the calculation rules of PocketLedgerBO.
- *
- * @author Jake Henderson
- * @since 2026-10-01
- */
 public class PocketLedgerBOTest {
 
     private PocketLedgerBO pocketLedgerBO;
@@ -20,7 +14,11 @@ public class PocketLedgerBOTest {
         pocketLedgerBO = new PocketLedgerBO();
     }
 
-    //Test 1: Verifies calculation of remaining budget pool from a baseline of $2,000.00.
+    /**
+     * Test 1 created by Jake following TDD
+     * @since 2026-10-01
+     * @author Jake Henderson
+     */
     @Test
     public void testCalculateRemainingBudget() {
         Expense expense = new Expense(1, "2026-09-17", "Groceries", "Groceries", 186.40, "Debit Card", false, true, "Weekly run");
@@ -32,7 +30,11 @@ public class PocketLedgerBOTest {
         assertEquals(expectedRemaining, actualRemaining, 0.001, "Remaining budget should equal baseline minus expense amount.");
     }
 
-    //Test 2: Verifies that high expense entries cleanly drop the remaining cash pool balance.
+    /**
+     * Test 2 created by Jake following TDD
+     * @since 2026-10-01
+     * @author Jake Henderson
+     */
     @Test
     public void testCalculateRemainingWithLargeExpense() {
         Expense expense = new Expense(2, "2026-09-01", "Monthly Rent", "Housing/Utilities", 950.00, "Pre-authorized", true, true, "N/A");
@@ -44,7 +46,11 @@ public class PocketLedgerBOTest {
         assertEquals(expectedRemaining, actualRemaining, 0.001);
     }
 
-    //Test 3: Verifies that the remaining pool is positive for any expense below the baseline threshold.
+    /**
+     * Test 3 created by Jake following TDD
+     * @since 2026-10-01
+     * @author Jake Henderson
+     */
     @Test
     public void testCalculatePoolIsPositive() {
         Expense expense = new Expense(3, "2026-09-12", "Dining out", "Dining Out", 122.75, "Credit Card", false, false, "N/A");

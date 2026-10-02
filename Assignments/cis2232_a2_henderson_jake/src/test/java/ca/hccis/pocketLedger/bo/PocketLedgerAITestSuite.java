@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
+//****************************************************************************
+//The following were the unit tests that were created by Google AI Assistant
+//****************************************************************************
+
 public class PocketLedgerAITestSuite {
     private PocketLedgerBO pocketLedgerBO;
     private ArrayList<Expense> sampleSeptemberLedger;
