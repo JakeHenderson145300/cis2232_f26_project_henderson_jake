@@ -58,5 +58,6 @@ The calculation therefore depends on ExpenseDate, Amount, Category, IsRecurring 
 
 ## Report Details ##
 
-To be determined in a future sprint.
+__Category Type Report__
+* Enter a category type and the report will return all rows that belong to that category.
 
