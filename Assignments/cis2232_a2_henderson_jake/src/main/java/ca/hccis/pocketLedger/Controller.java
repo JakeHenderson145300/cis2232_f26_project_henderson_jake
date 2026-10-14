@@ -75,7 +75,7 @@ public class Controller {
         newExpense.getInformation(nextId);
         expenses.add(newExpense);
         saveData();
-        System.out.println("Expense added an saved successfully");
+        System.out.println("Expense added and saved successfully");
     }
 
     //Method to save data into the data_henderson_jake.json file
