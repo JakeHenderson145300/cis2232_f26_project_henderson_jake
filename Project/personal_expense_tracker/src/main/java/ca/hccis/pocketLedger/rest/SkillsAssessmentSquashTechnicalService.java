@@ -1,7 +1,7 @@
 package ca.hccis.pocketLedger.rest;
 
 import ca.hccis.pocketLedger.bo.SkillsAssessmentSquashTechnicalBO;
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 import ca.hccis.pocketLedger.repositories.SkillsAssessmentSquashTechnicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +31,10 @@ public class SkillsAssessmentSquashTechnicalService {
     }
 
     @GetMapping
-    public ResponseEntity<List<SkillsAssessmentSquashTechnical>> getAll() {
+    public ResponseEntity<List<PersonalExpenseTracker>> getAll() {
 
-        Iterable<SkillsAssessmentSquashTechnical> assessmentsIterable = repo.findAll();
-        List<SkillsAssessmentSquashTechnical> assessments = new ArrayList<>();
+        Iterable<PersonalExpenseTracker> assessmentsIterable = repo.findAll();
+        List<PersonalExpenseTracker> assessments = new ArrayList<>();
         assessmentsIterable.forEach(assessments::add);
 
         if (assessments == null || assessments.isEmpty()) {
@@ -45,7 +45,7 @@ public class SkillsAssessmentSquashTechnicalService {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SkillsAssessmentSquashTechnical> getById(@PathVariable Integer id) {
+    public ResponseEntity<PersonalExpenseTracker> getById(@PathVariable Integer id) {
 
         return repo.findById(id)
                 .map(ResponseEntity::ok)
@@ -64,19 +64,19 @@ public class SkillsAssessmentSquashTechnicalService {
     }
 
     @PostMapping
-    public ResponseEntity<SkillsAssessmentSquashTechnical> create(
-            @RequestBody SkillsAssessmentSquashTechnical obj) {
+    public ResponseEntity<PersonalExpenseTracker> create(
+            @RequestBody PersonalExpenseTracker obj) {
 
         SkillsAssessmentSquashTechnicalBO.calculateTechnicalScore(obj);
-        SkillsAssessmentSquashTechnical saved = repo.save(obj);
+        PersonalExpenseTracker saved = repo.save(obj);
 
         return ResponseEntity.ok(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SkillsAssessmentSquashTechnical> update(
+    public ResponseEntity<PersonalExpenseTracker> update(
             @PathVariable Integer id,
-            @RequestBody SkillsAssessmentSquashTechnical obj) {
+            @RequestBody PersonalExpenseTracker obj) {
 
         obj.setId(id);
         SkillsAssessmentSquashTechnicalBO.calculateTechnicalScore(obj);

@@ -1,6 +1,6 @@
 package ca.hccis.pocketLedger.controllers;
 
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 import org.springframework.ui.Model;
 import ca.hccis.pocketLedger.repositories.CodeValueRepository;
 import ca.hccis.pocketLedger.repositories.SkillsAssessmentSquashTechnicalRepository;
@@ -47,7 +47,7 @@ public class BaseController {
         session.setAttribute("currentDate", currentDate);
 
         //BusPassBO.setBusPassTypes(_cvr, session);
-        ArrayList<SkillsAssessmentSquashTechnical> assessments = new ArrayList();
+        ArrayList<PersonalExpenseTracker> assessments = new ArrayList();
         _sastr.findAll().forEach(assessments::add);
         assessments.sort((a, b) -> a.getTechnicalScore().compareTo(b.getTechnicalScore()));
         model.addAttribute("assessments", assessments);

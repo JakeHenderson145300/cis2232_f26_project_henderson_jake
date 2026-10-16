@@ -1,6 +1,6 @@
 package ca.hccis.pocketLedger.dao;
 
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +14,13 @@ import java.util.ResourceBundle;
  * @author bjmaclean
  * @since 20251009
  */
-public class SkillsAssessmentSquashTechnicalDAO {
+public class PersonalExpenseTrackerDAO {
 
     private static ResultSet rs;
     private static Connection conn = null;
-    private static final Logger logger = LoggerFactory.getLogger(SkillsAssessmentSquashTechnicalDAO.class);
+    private static final Logger logger = LoggerFactory.getLogger(PersonalExpenseTrackerDAO.class);
 
-    public SkillsAssessmentSquashTechnicalDAO() {
+    public PersonalExpenseTrackerDAO() {
 
         String propFileName = "application";
         ResourceBundle rb = ResourceBundle.getBundle(propFileName);
@@ -42,8 +42,8 @@ public class SkillsAssessmentSquashTechnicalDAO {
      * @since 20210924
      * @author BJM
      */
-    public ArrayList<SkillsAssessmentSquashTechnical> selectAll() {
-        ArrayList<SkillsAssessmentSquashTechnical> assessments = null;
+    public ArrayList<PersonalExpenseTracker> selectAll() {
+        ArrayList<PersonalExpenseTracker> assessments = null;
         Statement stmt = null;
 
         //******************************************************************
@@ -67,7 +67,7 @@ public class SkillsAssessmentSquashTechnicalDAO {
 
             while (rs.next()) {
 
-                SkillsAssessmentSquashTechnical squash = new SkillsAssessmentSquashTechnical();
+                PersonalExpenseTracker squash = new PersonalExpenseTracker();
                 squash.setId(rs.getInt("id"));
                 squash.setAssessmentDate(rs.getString("assessmentDate"));
                 squash.setCreatedDateTime(rs.getString("createdDateTime"));
@@ -104,8 +104,8 @@ public class SkillsAssessmentSquashTechnicalDAO {
      * @since 20251009
      * @author BJM
      */
-    public ArrayList<SkillsAssessmentSquashTechnical> selectAllByAthleteAssessorName(String athleteName) {
-        ArrayList<SkillsAssessmentSquashTechnical> assessments = null;
+    public ArrayList<PersonalExpenseTracker> selectAllByAthleteAssessorName(String athleteName) {
+        ArrayList<PersonalExpenseTracker> assessments = null;
         Statement stmt = null;
 
         //******************************************************************
@@ -150,8 +150,8 @@ public class SkillsAssessmentSquashTechnicalDAO {
      * @since 20251009
      * @author BJM
      */
-    public ArrayList<SkillsAssessmentSquashTechnical> selectAllByScoreMinMax(int min, int max) {
-        ArrayList<SkillsAssessmentSquashTechnical> assessments = null;
+    public ArrayList<PersonalExpenseTracker> selectAllByScoreMinMax(int min, int max) {
+        ArrayList<PersonalExpenseTracker> assessments = null;
         Statement stmt = null;
 
         //******************************************************************
@@ -190,12 +190,12 @@ public class SkillsAssessmentSquashTechnicalDAO {
         return assessments;
     }
 
-    public ArrayList<SkillsAssessmentSquashTechnical> loadList(ResultSet rs) throws SQLException {
-        ArrayList<SkillsAssessmentSquashTechnical> assessments = new  ArrayList();
+    public ArrayList<PersonalExpenseTracker> loadList(ResultSet rs) throws SQLException {
+        ArrayList<PersonalExpenseTracker> assessments = new  ArrayList();
 
         while (rs.next()) {
 
-            SkillsAssessmentSquashTechnical squash = new SkillsAssessmentSquashTechnical();
+            PersonalExpenseTracker squash = new PersonalExpenseTracker();
             squash.setId(rs.getInt("id"));
             squash.setAssessmentDate(rs.getString("assessmentDate"));
             squash.setCreatedDateTime(rs.getString("createdDateTime"));

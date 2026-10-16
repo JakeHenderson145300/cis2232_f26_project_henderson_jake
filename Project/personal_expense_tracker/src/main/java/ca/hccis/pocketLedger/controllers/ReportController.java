@@ -1,9 +1,9 @@
 package ca.hccis.pocketLedger.controllers;
 
 import ca.hccis.pocketLedger.bo.SkillsAssessmentSquashTechnicalBO;
-import ca.hccis.pocketLedger.dao.SkillsAssessmentSquashTechnicalDAO;
+import ca.hccis.pocketLedger.dao.PersonalExpenseTrackerDAO;
 import ca.hccis.pocketLedger.entity.ReportSquash;
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -91,7 +91,7 @@ public class ReportController {
         //Write some model code to go to the db and get the appropriate assessments
         //Add them to a collection in the ReportSquash class
         SkillsAssessmentSquashTechnicalBO skillsAssessmentSquashTechnicalBO = new SkillsAssessmentSquashTechnicalBO();
-        ArrayList<SkillsAssessmentSquashTechnical> theList = skillsAssessmentSquashTechnicalBO.processSelectAllByAthleteAssessorName(reportSquash.getName());
+        ArrayList<PersonalExpenseTracker> theList = skillsAssessmentSquashTechnicalBO.processSelectAllByAthleteAssessorName(reportSquash.getName());
         reportSquash.setSkillsAssessmentSquashTechnicals(theList);
 
         //Add a message in case the report does not contain any data
@@ -122,8 +122,8 @@ public class ReportController {
 
         //Write some model code to go to the db and get the appropriate assessments
         //Add them to a collection in the ReportSquash class
-        SkillsAssessmentSquashTechnicalDAO squashDAO = new SkillsAssessmentSquashTechnicalDAO();
-        ArrayList<SkillsAssessmentSquashTechnical> theList = squashDAO.selectAllByScoreMinMax(reportSquash.getMinScore(), reportSquash.getMaxScore());
+        PersonalExpenseTrackerDAO squashDAO = new PersonalExpenseTrackerDAO();
+        ArrayList<PersonalExpenseTracker> theList = squashDAO.selectAllByScoreMinMax(reportSquash.getMinScore(), reportSquash.getMaxScore());
         reportSquash.setSkillsAssessmentSquashTechnicals(theList);
 
         //Add a message in case the report does not contain any data

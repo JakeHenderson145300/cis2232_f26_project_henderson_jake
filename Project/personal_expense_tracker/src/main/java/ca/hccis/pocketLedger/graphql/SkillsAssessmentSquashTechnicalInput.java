@@ -1,6 +1,6 @@
 package ca.hccis.pocketLedger.graphql;
 
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 
 public class SkillsAssessmentSquashTechnicalInput {
     public String assessmentDate;
@@ -14,8 +14,8 @@ public class SkillsAssessmentSquashTechnicalInput {
     public Integer backhandVolleyMax;
     public Integer backhandVolleySum;
 
-    public SkillsAssessmentSquashTechnical toEntity() {
-        SkillsAssessmentSquashTechnical e = new SkillsAssessmentSquashTechnical();
+    public PersonalExpenseTracker toEntity() {
+        PersonalExpenseTracker e = new PersonalExpenseTracker();
         e.setAssessmentDate(this.assessmentDate);
         e.setCreatedDateTime(this.createdDateTime);
         e.setAthleteName(this.athleteName);

@@ -1,13 +1,13 @@
 package ca.hccis.pocketLedger.repositories;
 
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface SkillsAssessmentSquashTechnicalRepository extends CrudRepository<SkillsAssessmentSquashTechnical, Integer> {
+public interface SkillsAssessmentSquashTechnicalRepository extends CrudRepository<PersonalExpenseTracker, Integer> {
     /**
      * Use Spring Data JPA functionality to find a list  containing the
      * string passed in as a paramter.
@@ -18,7 +18,7 @@ public interface SkillsAssessmentSquashTechnicalRepository extends CrudRepositor
      * @author BJM
      */
     //https://www.baeldung.com/spring-jpa-like-queries
-    List<SkillsAssessmentSquashTechnical> findByAthleteNameContaining(String name);
-    List<SkillsAssessmentSquashTechnical> findByAssessorNameContaining(String name);
+    List<PersonalExpenseTracker> findByAthleteNameContaining(String name);
+    List<PersonalExpenseTracker> findByAssessorNameContaining(String name);
 
 }

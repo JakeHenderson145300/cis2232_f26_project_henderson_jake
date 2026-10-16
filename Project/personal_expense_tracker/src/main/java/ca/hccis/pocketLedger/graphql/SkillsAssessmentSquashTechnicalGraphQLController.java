@@ -1,6 +1,6 @@
 package ca.hccis.pocketLedger.graphql;
 
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 import ca.hccis.pocketLedger.repositories.SkillsAssessmentSquashTechnicalRepository;
 import ca.hccis.pocketLedger.bo.SkillsAssessmentSquashTechnicalBO;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -22,38 +22,38 @@ public class SkillsAssessmentSquashTechnicalGraphQLController {
     }
 
     @QueryMapping
-    public List<SkillsAssessmentSquashTechnical> assessments() {
-        List<SkillsAssessmentSquashTechnical> all = new ArrayList<>();
+    public List<PersonalExpenseTracker> assessments() {
+        List<PersonalExpenseTracker> all = new ArrayList<>();
         repo.findAll().forEach(all::add);
         return all;
     }
 
     @QueryMapping
-    public SkillsAssessmentSquashTechnical assessmentById(@Argument Integer id) {
-        Optional<SkillsAssessmentSquashTechnical> opt = repo.findById(id);
+    public PersonalExpenseTracker assessmentById(@Argument Integer id) {
+        Optional<PersonalExpenseTracker> opt = repo.findById(id);
         return opt.orElse(null);
     }
 
     @QueryMapping
-    public List<SkillsAssessmentSquashTechnical> findByAthlete(@Argument String name) {
+    public List<PersonalExpenseTracker> findByAthlete(@Argument String name) {
         return repo.findByAthleteNameContaining(name);
     }
 
     @QueryMapping
-    public List<SkillsAssessmentSquashTechnical> findByAssessor(@Argument String name) {
+    public List<PersonalExpenseTracker> findByAssessor(@Argument String name) {
         return repo.findByAssessorNameContaining(name);
     }
 
     @MutationMapping
-    public SkillsAssessmentSquashTechnical createAssessment(@Argument SkillsAssessmentSquashTechnicalInput input) {
-        SkillsAssessmentSquashTechnical entity = input.toEntity();
+    public PersonalExpenseTracker createAssessment(@Argument SkillsAssessmentSquashTechnicalInput input) {
+        PersonalExpenseTracker entity = input.toEntity();
         SkillsAssessmentSquashTechnicalBO.calculateTechnicalScore(entity);
         return repo.save(entity);
     }
 
     @MutationMapping
-    public SkillsAssessmentSquashTechnical updateAssessment(@Argument Integer id, @Argument SkillsAssessmentSquashTechnicalInput input) {
-        SkillsAssessmentSquashTechnical entity = input.toEntity();
+    public PersonalExpenseTracker updateAssessment(@Argument Integer id, @Argument SkillsAssessmentSquashTechnicalInput input) {
+        PersonalExpenseTracker entity = input.toEntity();
         entity.setId(id);
         SkillsAssessmentSquashTechnicalBO.calculateTechnicalScore(entity);
         return repo.save(entity);

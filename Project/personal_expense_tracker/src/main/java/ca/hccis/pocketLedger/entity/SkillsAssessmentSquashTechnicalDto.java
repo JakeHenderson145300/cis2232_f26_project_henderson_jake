@@ -1,33 +1,33 @@
 package ca.hccis.pocketLedger.entity;
 
-import ca.hccis.pocketLedger.jpa.entity.SkillsAssessmentSquashTechnical;
+import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SkillsAssessmentSquashTechnicalDto {
-    private List<SkillsAssessmentSquashTechnical> assessments;
+    private List<PersonalExpenseTracker> assessments;
 
     // default and parameterized constructor
 
 
     public SkillsAssessmentSquashTechnicalDto() {
-        assessments = new ArrayList<SkillsAssessmentSquashTechnical>();
+        assessments = new ArrayList<PersonalExpenseTracker>();
     }
 
-    public SkillsAssessmentSquashTechnicalDto(List<SkillsAssessmentSquashTechnical> assessments) {
+    public SkillsAssessmentSquashTechnicalDto(List<PersonalExpenseTracker> assessments) {
         this.assessments = assessments;
     }
 
-    public void addSkillsAssessmentSquashTechnical(SkillsAssessmentSquashTechnical skillsAssessmentSquashTechnical) {
+    public void addSkillsAssessmentSquashTechnical(PersonalExpenseTracker skillsAssessmentSquashTechnical) {
         this.assessments.add(skillsAssessmentSquashTechnical);
     }
 
-    public List<SkillsAssessmentSquashTechnical> getAssessments() {
+    public List<PersonalExpenseTracker> getAssessments() {
         return assessments;
     }
 
-    public void setAssessments(List<SkillsAssessmentSquashTechnical> assessments) {
+    public void setAssessments(List<PersonalExpenseTracker> assessments) {
         this.assessments = assessments;
     }
 }
