@@ -1,6 +1,6 @@
 package ca.hccis.pocketLedger.entity;
 
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
+import ca.hccis.pocketLedger.jpa.entity.SquashSkills;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class ReportSquash {
     private String name;
     private int minScore;
     private int maxScore;
-    private ArrayList<PersonalExpenseTracker> skillsAssessmentSquashTechnicals;
+    private ArrayList<SquashSkills> skillsAssessmentSquashTechnicals;
 
     public String getName() {
         return name;
@@ -39,11 +39,11 @@ public class ReportSquash {
         this.maxScore = maxScore;
     }
 
-    public ArrayList<PersonalExpenseTracker> getSkillsAssessmentSquashTechnicals() {
+    public ArrayList<SquashSkills> getSkillsAssessmentSquashTechnicals() {
         return skillsAssessmentSquashTechnicals;
     }
 
-    public void setSkillsAssessmentSquashTechnicals(ArrayList<PersonalExpenseTracker> skillsAssessmentSquashTechnicals) {
+    public void setSkillsAssessmentSquashTechnicals(ArrayList<SquashSkills> skillsAssessmentSquashTechnicals) {
         this.skillsAssessmentSquashTechnicals = skillsAssessmentSquashTechnicals;
     }
 }

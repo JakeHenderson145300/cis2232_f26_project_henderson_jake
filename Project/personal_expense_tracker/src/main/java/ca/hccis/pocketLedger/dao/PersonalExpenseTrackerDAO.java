@@ -1,282 +1,112 @@
 package ca.hccis.pocketLedger.dao;
 
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.sql.*;
+import ca.hccis.pocketLedger.jpa.entity.Expense;
+import ca.hccis.pocketLedger.util.DatabaseUtility;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 /**
- * DAO class to access db.
+ * Handles raw JDBC database manipulation operations for PocketLedger.
+ * Isolate database lookups safely away from squash metrics.
  *
- * @author bjmaclean
- * @since 20251009
+ * @author Jake Henderson
+ * @since 2026-10-29
  */
 public class PersonalExpenseTrackerDAO {
 
-    private static ResultSet rs;
-    private static Connection conn = null;
-    private static final Logger logger = LoggerFactory.getLogger(PersonalExpenseTrackerDAO.class);
-
-    public PersonalExpenseTrackerDAO() {
-
-        String propFileName = "application";
-        ResourceBundle rb = ResourceBundle.getBundle(propFileName);
-        String connectionString = rb.getString("spring.datasource.url");
-        String userName = rb.getString("spring.datasource.username");
-        String password = rb.getString("spring.datasource.password");
-
-        try {
-            conn = DriverManager.getConnection(connectionString, userName, password);
-        } catch (SQLException e) {
-            logger.error(e.toString());
-        }
-
-    }
-
     /**
-     * Select all
-     *
-     * @since 20210924
-     * @author BJM
+     * Sprint 2 Dynamic Lookup: Pulls an ordered unique list of active spending
+     * categories from your live database rows to populate dropdown forms.
      */
-    public ArrayList<PersonalExpenseTracker> selectAll() {
-        ArrayList<PersonalExpenseTracker> assessments = null;
+    public ArrayList<String> selectDistinctCategories() {
+        ArrayList<String> categories = new ArrayList<>();
+        Connection conn = null;
         Statement stmt = null;
+        ResultSet rs = null;
 
-        //******************************************************************
-        //Use the DriverManager to get a connection to our MySql database.  Note
-        //that in the dependencies, we added the Java connector to MySql which 
-        //will allow us to connect to a MySql database.
-        //******************************************************************
-        //******************************************************************
-        //Create a statement object using our connection to the database.  This 
-        //statement object will allow us to run sql commands against the database.
-        //******************************************************************
         try {
-
+            // Reuses your project's built-in application properties connection pool loader
+            conn = DatabaseUtility.getConnection("");
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select * from SkillsAssessmentSquashTechnical;");
-
-            //******************************************************************
-            //Loop through the result set using the next method.  
-            //******************************************************************
-            assessments = new ArrayList();
+            rs = stmt.executeQuery("SELECT DISTINCT category FROM expenses ORDER BY category ASC;");
 
             while (rs.next()) {
-
-                PersonalExpenseTracker squash = new PersonalExpenseTracker();
-                squash.setId(rs.getInt("id"));
-                squash.setAssessmentDate(rs.getString("assessmentDate"));
-                squash.setCreatedDateTime(rs.getString("createdDateTime"));
-                squash.setAthleteName(rs.getString("athleteName"));
-                squash.setAssessorName(rs.getString("assessorName"));
-                squash.setForehandDrives(rs.getInt("forehandDrives"));
-                squash.setBackhandDrives(rs.getInt("backhandDrives"));
-                squash.setForehandVolleyMax(rs.getInt("forehandVolleyMax"));
-                squash.setForehandVolleySum(rs.getInt("forehandVolleySum"));
-                squash.setBackhandVolleyMax(rs.getInt("backhandVolleyMax"));
-                squash.setBackhandVolleySum(rs.getInt("backhandVolleySum"));
-
-                assessments.add(squash);
+                String cat = rs.getString("category");
+                if (cat != null && !cat.trim().isEmpty()) {
+                    categories.add(cat);
+                }
             }
-
         } catch (SQLException e) {
-
             e.printStackTrace();
-
         } finally {
-
             try {
-                stmt.close();
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
             } catch (SQLException ex) {
-                System.out.println("There was an error closing");
+                System.out.println("Error closing distinct category resources");
             }
         }
-        return assessments;
+        return categories;
     }
 
     /**
-     * Select all by athlete/assessor name
-     *
-     * @since 20251009
-     * @author BJM
+     * Sprint 2 Report Filter: Extracts database rows via low-level JDBC statements.
+     * Filters completely by category with an optional date constraint.
      */
-    public ArrayList<PersonalExpenseTracker> selectAllByAthleteAssessorName(String athleteName) {
-        ArrayList<PersonalExpenseTracker> assessments = null;
-        Statement stmt = null;
+    public ArrayList<Expense> selectByReportCriteria(String category, String dateFilter) {
+        ArrayList<Expense> expensesList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-        //******************************************************************
-        //Use the DriverManager to get a connection to our MySql database.  Note
-        //that in the dependencies, we added the Java connector to MySql which
-        //will allow us to connect to a MySql database.
-        //******************************************************************
-        //******************************************************************
-        //Create a statement object using our connection to the database.  This
-        //statement object will allow us to run sql commands against the database.
-        //******************************************************************
+        StringBuilder sql = new StringBuilder("SELECT id, expenseDate, description, category, amount, paymentMethod, isRecurring, isEssential, notes FROM expenses WHERE category = ?");
+
+        boolean hasDate = (dateFilter != null && !dateFilter.trim().isEmpty());
+        if (hasDate) {
+            sql.append(" AND expenseDate = ?");
+        }
+
         try {
+            conn = DatabaseUtility.getConnection("");
+            stmt = conn.prepareStatement(sql.toString());
+            stmt.setString(1, category);
 
-            stmt = conn.createStatement();
-            String sqlStatement = "select * from SkillsAssessmentSquashTechnical " +
-                    "where athleteName = '"+athleteName+"' or assessorName = '"+athleteName+"';";
-            rs = stmt.executeQuery(sqlStatement);
+            if (hasDate) {
+                stmt.setString(2, dateFilter);
+            }
 
-            //******************************************************************
-            //Loop through the result set using the next method.
-            //******************************************************************
-            assessments = loadList(rs);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Expense item = new Expense();
+                item.setId(rs.getInt("id"));
+                item.setExpenseDate(rs.getString("expenseDate"));
+                item.setDescription(rs.getString("description"));
+                item.setCategory(rs.getString("category"));
+                item.setAmount(rs.getDouble("amount"));
+                item.setPaymentMethod(rs.getString("paymentMethod"));
+                item.setIsRecurring(rs.getBoolean("isRecurring"));
+                item.setIsEssential(rs.getBoolean("isEssential"));
+                item.setNotes(rs.getString("notes"));
 
+                expensesList.add(item);
+            }
         } catch (SQLException e) {
-
             e.printStackTrace();
-
         } finally {
-
             try {
-                stmt.close();
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
             } catch (SQLException ex) {
-                System.out.println("There was an error closing");
+                System.out.println("Error closing statement query execution pools");
             }
         }
-        return assessments;
+        return expensesList;
     }
-
-    /**
-     * Select all by min/max
-     *
-     * @since 20251009
-     * @author BJM
-     */
-    public ArrayList<PersonalExpenseTracker> selectAllByScoreMinMax(int min, int max) {
-        ArrayList<PersonalExpenseTracker> assessments = null;
-        Statement stmt = null;
-
-        //******************************************************************
-        //Use the DriverManager to get a connection to our MySql database.  Note
-        //that in the dependencies, we added the Java connector to MySql which
-        //will allow us to connect to a MySql database.
-        //******************************************************************
-        //******************************************************************
-        //Create a statement object using our connection to the database.  This
-        //statement object will allow us to run sql commands against the database.
-        //******************************************************************
-        try {
-
-            stmt = conn.createStatement();
-            String sqlStatement = "select * from SkillsAssessmentSquashTechnical " +
-                    "where technicalScore >= "+min+" and technicalScore <= "+max;
-            rs = stmt.executeQuery(sqlStatement);
-
-            //******************************************************************
-            //Loop through the result set using the next method.
-            //******************************************************************
-            assessments = loadList(rs);
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-
-        } finally {
-
-            try {
-                stmt.close();
-            } catch (SQLException ex) {
-                System.out.println("There was an error closing");
-            }
-        }
-        return assessments;
-    }
-
-    public ArrayList<PersonalExpenseTracker> loadList(ResultSet rs) throws SQLException {
-        ArrayList<PersonalExpenseTracker> assessments = new  ArrayList();
-
-        while (rs.next()) {
-
-            PersonalExpenseTracker squash = new PersonalExpenseTracker();
-            squash.setId(rs.getInt("id"));
-            squash.setAssessmentDate(rs.getString("assessmentDate"));
-            squash.setCreatedDateTime(rs.getString("createdDateTime"));
-            squash.setAthleteName(rs.getString("athleteName"));
-            squash.setAssessorName(rs.getString("assessorName"));
-            squash.setForehandDrives(rs.getInt("forehandDrives"));
-            squash.setBackhandDrives(rs.getInt("backhandDrives"));
-            squash.setForehandVolleyMax(rs.getInt("forehandVolleyMax"));
-            squash.setForehandVolleySum(rs.getInt("forehandVolleySum"));
-            squash.setBackhandVolleyMax(rs.getInt("backhandVolleyMax"));
-            squash.setBackhandVolleySum(rs.getInt("backhandVolleySum"));
-            squash.setTechnicalScore(rs.getInt("technicalScore"));
-
-            assessments.add(squash);
-        }
-        return assessments;
-    }
-
-//
-//    /**
-//     * Select all
-//     *
-//     * @since 20251118
-//     * @author BJM
-//     */
-//    public ArrayList<SkillsAssessmentSquashTechnical> selectAll() {
-//        ArrayList<SkillsAssessmentSquashTechnical> assessments = null;
-//        Statement stmt = null;
-//
-//        //******************************************************************
-//        //Use the DriverManager to get a connection to our MySql database.  Note
-//        //that in the dependencies, we added the Java connector to MySql which
-//        //will allow us to connect to a MySql database.
-//        //******************************************************************
-//        //******************************************************************
-//        //Create a statement object using our connection to the database.  This
-//        //statement object will allow us to run sql commands against the database.
-//        //******************************************************************
-//        try {
-//
-//            stmt = conn.createStatement();
-//            rs = stmt.executeQuery("select * from SkillsAssessmentSquashTechnical;");
-//
-//            //******************************************************************
-//            //Loop through the result set using the next method.
-//            //******************************************************************
-//            assessments = new ArrayList();
-//
-//            while (rs.next()) {
-//
-//                SkillsAssessmentSquashTechnical squash = new SkillsAssessmentSquashTechnical();
-//                squash.setId(rs.getInt("id"));
-//                squash.setAssessmentDate(rs.getString("assessmentDate"));
-//                squash.setCreatedDateTime(rs.getString("createdDateTime"));
-//                squash.setAthleteName(rs.getString("athleteName"));
-//                squash.setAssessorName(rs.getString("assessorName"));
-//                squash.setForehandDrives(rs.getInt("forehandDrives"));
-//                squash.setBackhandDrives(rs.getInt("backhandDrives"));
-//                squash.setForehandVolleyMax(rs.getInt("forehandVolleyMax"));
-//                squash.setForehandVolleySum(rs.getInt("forehandVolleySum"));
-//                squash.setBackhandVolleyMax(rs.getInt("backhandVolleyMax"));
-//                squash.setBackhandVolleySum(rs.getInt("backhandVolleySum"));
-//                squash.setTechnicalScore(rs.getInt("technicalScore"));
-//
-//                assessments.add(squash);
-//            }
-//
-//        } catch (SQLException e) {
-//
-//            e.printStackTrace();
-//
-//        } finally {
-//
-//            try {
-//                stmt.close();
-//            } catch (SQLException ex) {
-//                System.out.println("There was an error closing");
-//            }
-//        }
-//        return assessments;
-//    }
-
-
 }
+

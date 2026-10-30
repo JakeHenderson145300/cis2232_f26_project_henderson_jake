@@ -6,15 +6,15 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "expenses")
-public class PersonalExpenseTracker {
+@Table(name = "skillsassessmentsquashtechnical")
+public class SquashSkills {
 
     //This is added to this jpa entity class as an example of @Transient.  If you add attributes to this
     //class that are not to be persisted to the database, they should be @Transient.
     @Transient
     private String skillsCode;
 
-    public PersonalExpenseTracker() {
+    public SquashSkills() {
         this.forehandDrives = 0;
         this.backhandDrives = 0;
         this.forehandVolleyMax = 0;
@@ -183,8 +183,8 @@ public class PersonalExpenseTracker {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PersonalExpenseTracker)) return false;
-        PersonalExpenseTracker that = (PersonalExpenseTracker) o;
+        if (!(o instanceof SquashSkills)) return false;
+        SquashSkills that = (SquashSkills) o;
         return Objects.equals(getId(), that.getId());
     }
 

@@ -1,7 +1,7 @@
 package ca.hccis.pocketLedger.bo;
 
-import ca.hccis.pocketLedger.dao.PersonalExpenseTrackerDAO;
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
+import ca.hccis.pocketLedger.dao.SkillsAssessmentDAO;
+import ca.hccis.pocketLedger.jpa.entity.SquashSkills;
 import ca.hccis.pocketLedger.util.CisUtilityFile;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class SkillsAssessmentSquashTechnicalBO {
      * @author BJM
      * @since 20250915
      */
-    public static int calculateTechnicalScore(PersonalExpenseTracker skillsAssessmentSquashTechnical) {
+    public static int calculateTechnicalScore(SquashSkills skillsAssessmentSquashTechnical) {
         int score = 0;
 
         score = skillsAssessmentSquashTechnical.getForehandDrives() * POINTS_FOREHAND_DRIVES;
@@ -34,15 +34,15 @@ public class SkillsAssessmentSquashTechnicalBO {
         return score;
     }
 
-    public ArrayList<PersonalExpenseTracker> processSelectAllByAthleteAssessorName(String name) {
+    public ArrayList<SquashSkills> processSelectAllByAthleteAssessorName(String name) {
 
         //**********************************************************************
         // This could be done using the repository but there will be times when
         // jdbc will be useful.  For the reports, the requirements state that you
         // are to use jdbc to obtain the data for the report.
         //**********************************************************************
-        PersonalExpenseTrackerDAO skillsAssessmentSquashTechnicalDAO = new PersonalExpenseTrackerDAO();
-        ArrayList<PersonalExpenseTracker> assessments = skillsAssessmentSquashTechnicalDAO.selectAllByAthleteAssessorName(name);
+        SkillsAssessmentDAO skillsAssessmentSquashTechnicalDAO = new SkillsAssessmentDAO();
+        ArrayList<SquashSkills> assessments = skillsAssessmentSquashTechnicalDAO.selectAllByAthleteAssessorName(name);
 
         //Also write the report to a file
         CisUtilityFile.writeReportToFile("athleteAssessorNameReport", assessments);

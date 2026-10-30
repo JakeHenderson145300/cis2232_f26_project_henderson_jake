@@ -1,9 +1,10 @@
 package ca.hccis.pocketLedger.controllers;
 
 import ca.hccis.pocketLedger.bo.SkillsAssessmentSquashTechnicalBO;
-import ca.hccis.pocketLedger.dao.PersonalExpenseTrackerDAO;
+import ca.hccis.pocketLedger.dao.SkillsAssessmentDAO;
 import ca.hccis.pocketLedger.entity.ReportSquash;
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
+import ca.hccis.pocketLedger.jpa.entity.Expense;
+import ca.hccis.pocketLedger.jpa.entity.SquashSkills;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -91,7 +92,7 @@ public class ReportController {
         //Write some model code to go to the db and get the appropriate assessments
         //Add them to a collection in the ReportSquash class
         SkillsAssessmentSquashTechnicalBO skillsAssessmentSquashTechnicalBO = new SkillsAssessmentSquashTechnicalBO();
-        ArrayList<PersonalExpenseTracker> theList = skillsAssessmentSquashTechnicalBO.processSelectAllByAthleteAssessorName(reportSquash.getName());
+        ArrayList<SquashSkills> theList = skillsAssessmentSquashTechnicalBO.processSelectAllByAthleteAssessorName(reportSquash.getName());
         reportSquash.setSkillsAssessmentSquashTechnicals(theList);
 
         //Add a message in case the report does not contain any data
@@ -122,8 +123,8 @@ public class ReportController {
 
         //Write some model code to go to the db and get the appropriate assessments
         //Add them to a collection in the ReportSquash class
-        PersonalExpenseTrackerDAO squashDAO = new PersonalExpenseTrackerDAO();
-        ArrayList<PersonalExpenseTracker> theList = squashDAO.selectAllByScoreMinMax(reportSquash.getMinScore(), reportSquash.getMaxScore());
+        SkillsAssessmentDAO squashDAO = new SkillsAssessmentDAO();
+        ArrayList<SquashSkills> theList = squashDAO.selectAllByScoreMinMax(reportSquash.getMinScore(), reportSquash.getMaxScore());
         reportSquash.setSkillsAssessmentSquashTechnicals(theList);
 
         //Add a message in case the report does not contain any data
@@ -138,5 +139,64 @@ public class ReportController {
         return "report/reportSquashScore"; //Send user to another view.
     }
 
+    /**
+     * Sprint 2 Route: Directs the user to your custom expense report form view.
+     * Combined URL Path: http://localhost:8080/report/pocketledger/criteria
+     *
+     * @author Jake Henderson
+     */
+    @RequestMapping("/pocketLedger/criteria") // Removed the redundant "/report" segment
+    public String showPocketLedgerReportForm(Model model) {
+        logger.info("Serving pocket ledger criteria form path through active scanned controller.");
+
+        ca.hccis.pocketLedger.dao.PersonalExpenseTrackerDAO pocketDAO = new ca.hccis.pocketLedger.dao.PersonalExpenseTrackerDAO();
+        ArrayList<String> dynamicCategories = pocketDAO.selectDistinctCategories();
+
+        model.addAttribute("categoriesList", dynamicCategories);
+        return "report/pocketLedgerReportCriteria";
+    }
+
+    /**
+     * Sprint 2 Action: Processes criteria, handles arithmetic accumulations,
+     * and dumps a backup copy using the professor's native file utility.
+     * Combined URL Path: http://localhost:8080/report/pocketledger/generate
+     */
+    @RequestMapping("/pocketLedger/generate") // Removed the redundant "/report" segment
+    public String generatePocketLedgerReport(
+            Model model,
+            @org.springframework.web.bind.annotation.RequestParam("categorySelection") String category,
+            @org.springframework.web.bind.annotation.RequestParam(value = "dateSelection", required = false) String dateFilter) {
+
+        logger.info("Executing row-level JDBC criteria extraction for category: " + category);
+        ca.hccis.pocketLedger.dao.PersonalExpenseTrackerDAO pocketDAO = new ca.hccis.pocketLedger.dao.PersonalExpenseTrackerDAO();
+
+        ArrayList resultsList = pocketDAO.selectByReportCriteria(category, dateFilter);
+
+        double spendingTotalAccumulator = 0.0;
+        if (resultsList != null) {
+            for (Object item : resultsList) {
+                Expense rowItem = (Expense) item;
+                spendingTotalAccumulator += rowItem.getAmount();
+            }
+        }
+
+        if (resultsList != null && !resultsList.isEmpty()) {
+            String sanitizedBaseName = "ExpenseReport_" + category.replaceAll(" ", "");
+            ca.hccis.pocketLedger.util.CisUtilityFile.writeReportToFile(sanitizedBaseName, resultsList);
+        }
+
+        ArrayList<String> dynamicCategories = pocketDAO.selectDistinctCategories();
+
+        model.addAttribute("categoriesList", dynamicCategories);
+        model.addAttribute("selectedCategory", category);
+        model.addAttribute("matchedExpenses", resultsList);
+        model.addAttribute("totalAccumulatedCost", spendingTotalAccumulator);
+
+        if (resultsList == null || resultsList.isEmpty()) {
+            model.addAttribute("message", "No matching historical expense transactions found for those parameters.");
+        }
+
+        return "report/pocketLedgerReportCriteria";
+    }
 
 }

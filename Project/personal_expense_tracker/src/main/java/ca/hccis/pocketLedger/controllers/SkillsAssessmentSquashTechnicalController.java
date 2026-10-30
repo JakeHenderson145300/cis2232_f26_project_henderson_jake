@@ -4,7 +4,7 @@ import ca.hccis.pocketLedger.bo.SkillsAssessmentSquashTechnicalBO;
 import ca.hccis.pocketLedger.bo.SkillsAssessmentSquashTechnicalValidationBO;
 import ca.hccis.pocketLedger.entity.SkillsAssessmentSquashTechnicalDto;
 import ca.hccis.pocketLedger.jpa.entity.CodeValue;
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
+import ca.hccis.pocketLedger.jpa.entity.SquashSkills;
 import ca.hccis.pocketLedger.repositories.CodeValueRepository;
 import ca.hccis.pocketLedger.repositories.SkillsAssessmentSquashTechnicalRepository;
 import org.slf4j.Logger;
@@ -68,9 +68,9 @@ public class SkillsAssessmentSquashTechnicalController {
         session.setAttribute("skillTypes", skillTypes);
 
 
-        Iterable<PersonalExpenseTracker> assessments = _sastr.findAll();
+        Iterable<SquashSkills> assessments = _sastr.findAll();
         model.addAttribute("assessments", assessments);
-        model.addAttribute("assessment", new PersonalExpenseTracker());
+        model.addAttribute("assessment", new SquashSkills());
         return "skillsassessmentsquashtechnical/list";
     }
 
@@ -91,9 +91,9 @@ public class SkillsAssessmentSquashTechnicalController {
             //todo what if delete was not successful?
             model.addAttribute("messageError", "Exception deleting assessment");
         }
-        Iterable<PersonalExpenseTracker> assessments = _sastr.findAll();
+        Iterable<SquashSkills> assessments = _sastr.findAll();
         model.addAttribute("assessments", assessments);
-        model.addAttribute("assessment", new PersonalExpenseTracker());
+        model.addAttribute("assessment", new SquashSkills());
         return "skillsassessmentsquashtechnical/list";
     }
 
@@ -109,7 +109,7 @@ public class SkillsAssessmentSquashTechnicalController {
     @RequestMapping("/add")
     public String add(Model model, HttpSession session) {
 
-        PersonalExpenseTracker skillsAssessmentSquashTechnical = new PersonalExpenseTracker();
+        SquashSkills skillsAssessmentSquashTechnical = new SquashSkills();
         model.addAttribute("skillsAssessment", skillsAssessmentSquashTechnical);
         return "skillsassessmentsquashtechnical/add";
     }
@@ -133,9 +133,9 @@ public class SkillsAssessmentSquashTechnicalController {
 
         //todo How can we best communcicate this to the view.
         model.addAttribute("messageError", "Could not load the assessment");
-        Iterable<PersonalExpenseTracker> assessments = _sastr.findAll();
+        Iterable<SquashSkills> assessments = _sastr.findAll();
         model.addAttribute("assessments", assessments);
-        model.addAttribute("assessment", new PersonalExpenseTracker());
+        model.addAttribute("assessment", new SquashSkills());
         return "skillsassessmentsquashtechnical/list";
     }
 
@@ -151,7 +151,7 @@ public class SkillsAssessmentSquashTechnicalController {
      * @since 20251201
      */
     @RequestMapping("/submit")
-    public String submit(Model model, HttpServletRequest request, @Valid @ModelAttribute("skillsAssessment") PersonalExpenseTracker skillsAssessmentSquashTechnical, BindingResult bindingResult) {
+    public String submit(Model model, HttpServletRequest request, @Valid @ModelAttribute("skillsAssessment") SquashSkills skillsAssessmentSquashTechnical, BindingResult bindingResult) {
         boolean valid = true;
 
         //Sprint 5 business validation
@@ -189,18 +189,18 @@ public class SkillsAssessmentSquashTechnicalController {
      * @since 2025-12-01
      */
     @RequestMapping("/search")
-    public String search(Model model, @ModelAttribute("assessment") PersonalExpenseTracker skillsAssessmentSquashTechnical) {
+    public String search(Model model, @ModelAttribute("assessment") SquashSkills skillsAssessmentSquashTechnical) {
 
         //**********************************************************************
         //Use repository method created to find any entities which contain
         //the name entered on the list page.
         //**********************************************************************
 
-        List<PersonalExpenseTracker> assessmentsAthleteName = _sastr.findByAthleteNameContaining(skillsAssessmentSquashTechnical.getAthleteName());
-        List<PersonalExpenseTracker> assessmentsAssessorName = _sastr.findByAssessorNameContaining(skillsAssessmentSquashTechnical.getAthleteName());
+        List<SquashSkills> assessmentsAthleteName = _sastr.findByAthleteNameContaining(skillsAssessmentSquashTechnical.getAthleteName());
+        List<SquashSkills> assessmentsAssessorName = _sastr.findByAssessorNameContaining(skillsAssessmentSquashTechnical.getAthleteName());
 
         //put in set to eliminate duplicates
-        HashSet<PersonalExpenseTracker> skillsAssessmentSquashTechnicalsSet = new HashSet<>();
+        HashSet<SquashSkills> skillsAssessmentSquashTechnicalsSet = new HashSet<>();
         skillsAssessmentSquashTechnicalsSet.addAll(assessmentsAthleteName);
         skillsAssessmentSquashTechnicalsSet.addAll(assessmentsAssessorName);
 
@@ -214,9 +214,9 @@ public class SkillsAssessmentSquashTechnicalController {
         SkillsAssessmentSquashTechnicalDto skillsAssessmentSquashTechnicalForm = new SkillsAssessmentSquashTechnicalDto();
 
 
-        Iterable<PersonalExpenseTracker> assessments = _sastr.findAll();
-        ArrayList<PersonalExpenseTracker> tempList = new ArrayList<>();
-        for (PersonalExpenseTracker current : assessments) {
+        Iterable<SquashSkills> assessments = _sastr.findAll();
+        ArrayList<SquashSkills> tempList = new ArrayList<>();
+        for (SquashSkills current : assessments) {
             tempList.add(current);
         }
         skillsAssessmentSquashTechnicalForm.setAssessments(tempList);
@@ -233,9 +233,9 @@ public class SkillsAssessmentSquashTechnicalController {
 
         SkillsAssessmentSquashTechnicalDto skillsAssessmentSquashTechnicalForm = new SkillsAssessmentSquashTechnicalDto();
 
-        Iterable<PersonalExpenseTracker> assessments = _sastr.findAll();
-        ArrayList<PersonalExpenseTracker> tempList = new ArrayList<>();
-        for (PersonalExpenseTracker current : assessments) {
+        Iterable<SquashSkills> assessments = _sastr.findAll();
+        ArrayList<SquashSkills> tempList = new ArrayList<>();
+        for (SquashSkills current : assessments) {
             tempList.add(current);
         }
         skillsAssessmentSquashTechnicalForm.setAssessments(tempList);

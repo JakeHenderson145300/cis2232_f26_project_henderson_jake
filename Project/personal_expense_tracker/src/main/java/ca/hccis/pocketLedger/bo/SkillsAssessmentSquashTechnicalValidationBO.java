@@ -1,12 +1,12 @@
 package ca.hccis.pocketLedger.bo;
 
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
+import ca.hccis.pocketLedger.jpa.entity.SquashSkills;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SkillsAssessmentSquashTechnicalValidationBO {
 
-    public static ArrayList<String> validateAssessmentDate(PersonalExpenseTracker skillsAssessmentSquashTechnical) {
+    public static ArrayList<String> validateAssessmentDate(SquashSkills skillsAssessmentSquashTechnical) {
 
         ArrayList<String> errors = new ArrayList<>();
 

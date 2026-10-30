@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <meta charset="UTF-8"/>
+    <title>PocketLedger Reporting Center</title>
+</head>
+<body>
+
+<!-- Reuses Group Common Shell Navigation Headers -->
+<nav th:replace="fragments/navHeader :: navbar"></nav>
+
+<div class="container mt-4 mb-5 p-4 bg-white border rounded shadow-sm" style="max-width: 900px;">
+    <h2 style="color: var(--main-color-primary);">PocketLedger - Category Expense Statement</h2>
+    <p class="text-muted">Select an expense category classification type to filter database records via JDBC driver scripts.</p>
+
+    <!-- Search Entry Controls Panel -->
+    <form th:action="@{/report/pocketLedger/generate}" method="post" class="mt-4" style="max-width: 500px;">
+        <div class="form-group mb-3">
+            <label class="form-label fw-bold">Select Expenditure Category Classification:</label>
+            <select name="categorySelection" required class="form-control form-select">
+                <option value="">-- Choose Category --</option>
+                <!-- Populates choices dynamically from your table rows -->
+                <option th:each="cat : ${categoriesList}" th:value="${cat}" th:text="${cat}">Category Name</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-4">
+            <label class="form-label fw-bold">Filter Explicitly By Date (Optional):</label>
+            <input type="date" name="dateSelection" class="form-control">
+        </div>
+
+        <button type="submit" class="btn text-white fw-bold px-4" style="background-color: var(--main-color-primary);">
+            Generate Statement Report
+        </button>
+    </form>
+
+    <!-- Condition Grid View Display Block: Fires when variables load -->
+    <div th:if="${matchedExpenses != null}" class="mt-5">
+        <hr class="my-4"/>
+        <h3>Statement Search Results For: <span th:text="${selectedCategory}" style="color: var(--main-color-primary);">Category</span></h3>
+        <p class="text-muted" style="font-size: 0.9em;">An archival copy has been pushed to your local <code>c:\CIS2232\</code> folder.</p>
+
+        <div th:if="${message != null}" class="alert alert-info mt-3" th:text="${message}"></div>
+
+        <!-- PocketLedger Core Grid Table Data View components -->
+        <table th:if="${!matchedExpenses.empty}" class="table table-striped table-hover mt-3 border tableStyles">
+            <thead class="text-white" style="background-color: var(--main-color-primary);">
+            <tr>
+                <th>ID</th>
+                <th>Expense Date</th>
+                <th>Description Label</th>
+                <th>Outflow Amount</th>
+                <th>Payment Method Choice</th>
+                <th>Notes Context</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expense : ${matchedExpenses}">
+                <td th:text="${expense.id}">1</td>
+                <td th:text="${expense.expenseDate}">2026-09-01</td>
+                <td th:text="${expense.description}">Text Label</td>
+                <td th:text="'$' + ${#numbers.formatDecimal(expense.amount, 1, 2)}">$0.00</td>
+                <td th:text="${expense.paymentMethod}">Debit</td>
+                <td th:text="${expense.notes}">Notes</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Accumulator business processing logic variable output metrics box -->
+        <div th:if="${!matchedExpenses.empty}" class="h5 p-3 rounded fw-bold mt-4" style="background-color: #E0F2F1; color: #004D40;">
+            Combined Group Accumulator Volume Total: $<span th:text="${#numbers.formatDecimal(totalAccumulatedCost, 1, 2)}">0.00</span>
+        </div>
+    </div>
+</div>
+
+<!-- Reuses Group Common Shell Footers -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>

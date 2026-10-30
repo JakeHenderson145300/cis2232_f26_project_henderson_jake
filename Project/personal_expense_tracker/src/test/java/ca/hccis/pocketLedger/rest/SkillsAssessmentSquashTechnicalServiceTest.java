@@ -1,6 +1,6 @@
 package ca.hccis.pocketLedger.rest;
 
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
+import ca.hccis.pocketLedger.jpa.entity.SquashSkills;
 import ca.hccis.pocketLedger.repositories.SkillsAssessmentSquashTechnicalRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class SkillsAssessmentSquashTechnicalServiceTest {
 
     @Test
     void create_calculatesTechnicalScoreAndReturnsSavedAssessment() {
-        PersonalExpenseTracker input = new PersonalExpenseTracker();
+        SquashSkills input = new SquashSkills();
         input.setAssessmentDate("2025-06-17");
         input.setCreatedDateTime("20250617120000");
         input.setAthleteName("Jane Doe");
@@ -40,13 +40,13 @@ class SkillsAssessmentSquashTechnicalServiceTest {
         input.setBackhandVolleyMax(1);
         input.setBackhandVolleySum(1);
 
-        when(repo.save(any(PersonalExpenseTracker.class))).thenAnswer(invocation -> {
-            PersonalExpenseTracker saved = invocation.getArgument(0);
+        when(repo.save(any(SquashSkills.class))).thenAnswer(invocation -> {
+            SquashSkills saved = invocation.getArgument(0);
             saved.setId(1);
             return saved;
         });
 
-        ResponseEntity<PersonalExpenseTracker> response = service.create(input);
+        ResponseEntity<SquashSkills> response = service.create(input);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -54,8 +54,8 @@ class SkillsAssessmentSquashTechnicalServiceTest {
         assertEquals(56, response.getBody().getTechnicalScore());
         assertEquals("Jane Doe", response.getBody().getAthleteName());
 
-        ArgumentCaptor<PersonalExpenseTracker> captor =
-                ArgumentCaptor.forClass(PersonalExpenseTracker.class);
+        ArgumentCaptor<SquashSkills> captor =
+                ArgumentCaptor.forClass(SquashSkills.class);
         verify(repo).save(captor.capture());
         assertEquals(56, captor.getValue().getTechnicalScore());
     }

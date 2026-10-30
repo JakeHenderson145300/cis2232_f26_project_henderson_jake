@@ -1,7 +1,7 @@
 package ca.hccis.pocketLedger.rest;
 
 import ca.hccis.pocketLedger.bo.SkillsAssessmentSquashTechnicalBO;
-import ca.hccis.pocketLedger.jpa.entity.PersonalExpenseTracker;
+import ca.hccis.pocketLedger.jpa.entity.SquashSkills;
 import ca.hccis.pocketLedger.repositories.SkillsAssessmentSquashTechnicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +31,10 @@ public class SkillsAssessmentSquashTechnicalService {
     }
 
     @GetMapping
-    public ResponseEntity<List<PersonalExpenseTracker>> getAll() {
+    public ResponseEntity<List<SquashSkills>> getAll() {
 
-        Iterable<PersonalExpenseTracker> assessmentsIterable = repo.findAll();
-        List<PersonalExpenseTracker> assessments = new ArrayList<>();
+        Iterable<SquashSkills> assessmentsIterable = repo.findAll();
+        List<SquashSkills> assessments = new ArrayList<>();
         assessmentsIterable.forEach(assessments::add);
 
         if (assessments == null || assessments.isEmpty()) {
@@ -45,7 +45,7 @@ public class SkillsAssessmentSquashTechnicalService {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonalExpenseTracker> getById(@PathVariable Integer id) {
+    public ResponseEntity<SquashSkills> getById(@PathVariable Integer id) {
 
         return repo.findById(id)
                 .map(ResponseEntity::ok)
@@ -64,19 +64,19 @@ public class SkillsAssessmentSquashTechnicalService {
     }
 
     @PostMapping
-    public ResponseEntity<PersonalExpenseTracker> create(
-            @RequestBody PersonalExpenseTracker obj) {
+    public ResponseEntity<SquashSkills> create(
+            @RequestBody SquashSkills obj) {
 
         SkillsAssessmentSquashTechnicalBO.calculateTechnicalScore(obj);
-        PersonalExpenseTracker saved = repo.save(obj);
+        SquashSkills saved = repo.save(obj);
 
         return ResponseEntity.ok(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonalExpenseTracker> update(
+    public ResponseEntity<SquashSkills> update(
             @PathVariable Integer id,
-            @RequestBody PersonalExpenseTracker obj) {
+            @RequestBody SquashSkills obj) {
 
         obj.setId(id);
         SkillsAssessmentSquashTechnicalBO.calculateTechnicalScore(obj);
