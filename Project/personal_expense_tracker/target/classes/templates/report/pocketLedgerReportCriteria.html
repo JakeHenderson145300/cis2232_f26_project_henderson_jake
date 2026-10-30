@@ -66,6 +66,47 @@
             </tbody>
         </table>
 
+        <div class="box mt-5" style="border-top: 4px solid #00796B;">
+            <h3 class="title is-4 mb-4">📈 Expense Share Visualizer</h3>
+            <p class="subtitle is-6 text-muted mb-4">Visual representation of expenses relative to your baseline budget cap</p>
+
+            <div class="columns is-multiline">
+                <!-- Loop through each filtered item and render a horizontal progress bar graph -->
+                <div class="column is-12" th:each="expense : ${matchedExpenses}">
+                    <div class="mb-2 is-flex is-justify-content-between">
+                        <div>
+                            <strong th:text="${expense.description}">Expense Description</strong>
+                            <span class="tag is-light ml-2" th:text="${expense.category}">Category</span>
+                        </div>
+                        <div class="has-text-weight-bold" th:text="'$' + ${#numbers.formatDecimal(expense.amount, 1, 2)}">$0.00</div>
+                    </div>
+
+                    <!-- Progress Bar Graph: Scales automatically out of your $2,000 baseline budget allotment -->
+                    <progress class="progress is-teal"
+                              th:value="${expense.amount}"
+                              max="2000"
+                              style="height: 1.25rem; background-color: #E0F2F1;"
+                              th:title="'Consumes ' + ${#numbers.formatDecimal((expense.amount / 2000.0) * 100, 1, 1)} + '% of standard budget Allotment'">
+                    </progress>
+                </div>
+            </div>
+
+            <!-- CUMULATIVE VOLUME ACCUMULATION GRAPH LINE -->
+            <div class="mt-5 pt-4" style="border-top: 1px solid #E0E0E0;">
+                <div class="is-flex is-justify-content-between mb-2">
+                    <span class="has-text-weight-bold">📊 Cumulative Total Budget Utilization Progress:</span>
+                    <span class="has-text-weight-bold" th:text="${#numbers.formatDecimal((totalAccumulatedCost / 2000.0) * 100, 1, 1)} + '%'">0%</span>
+                </div>
+
+                <!-- Master accumulation visual bar: turns red if over budget allocation boundaries -->
+                <progress th:class="${totalAccumulatedCost > 2000} ? 'progress is-danger' : 'progress is-primary'"
+                          th:value="${totalAccumulatedCost}"
+                          max="2000"
+                          style="height: 1.75rem;">
+                </progress>
+                <p class="help has-text-right" th:text="'Total Spent: $' + ${#numbers.formatDecimal(totalAccumulatedCost, 1, 2)} + ' / $2,000.00 Allotment'">$0.00</p>
+            </div>
+        </div>
         <!-- Accumulator business processing logic variable output metrics box -->
         <div th:if="${!matchedExpenses.empty}" class="h5 p-3 rounded fw-bold mt-4" style="background-color: #E0F2F1; color: #004D40;">
             Combined Group Accumulator Volume Total: $<span th:text="${#numbers.formatDecimal(totalAccumulatedCost, 1, 2)}">0.00</span>
