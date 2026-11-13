@@ -1,8 +1,10 @@
 package ca.hccis.pocketLedger.jpa.entity;
 
+import ca.hccis.pocketLedger.util.CisUtility;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
 
 /**
  * Clean independent JPA Entity class for PocketLedger database columns.
@@ -56,7 +58,11 @@ public class Expense {
     @Column(name = "notes")
     private String notes;
 
-    public Expense() {}
+    @ColumnDefault("2000")
+    @Column(name = "remainingBudget")
+    private double remainingBudget;
+
+    public Expense() { }
 
     /**
      * Required custom toString format so BJM's native file utility
@@ -95,5 +101,8 @@ public class Expense {
 
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
+
+    public double getRemainingBudget() { return remainingBudget; }
+    public void setRemainingBudget(double remainingBudget) { this.remainingBudget = remainingBudget; }
 }
 

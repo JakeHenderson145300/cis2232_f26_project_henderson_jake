@@ -5,24 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b89a2cd4-5fc3-4077-b552-d4f5b15babc9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b60683e5-721a-4744-8191-aafa53944307.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b60683e5-721a-4744-8191-aafa53944307.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/data_sources_history.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/bo/SkillsAssessmentSquashTechnicalBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/bo/SkillsAssessmentSquashTechnicalBO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/bo/SkillsAssessmentSquashTechnicalValidationBO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/bo/SkillsAssessmentSquashTechnicalValidationBO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/controllers/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/controllers/BaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/controllers/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/controllers/ReportController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/controllers/SkillsAssessmentSquashTechnicalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/controllers/SkillsAssessmentSquashTechnicalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/dao/SkillsAssessmentSquashTechnicalDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/dao/PersonalExpenseTrackerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/entity/ReportSquash.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/entity/ReportSquash.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/entity/SkillsAssessmentSquashTechnicalDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/entity/SkillsAssessmentSquashTechnicalDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/graphql/SkillsAssessmentSquashTechnicalGraphQLController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/graphql/SkillsAssessmentSquashTechnicalGraphQLController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/graphql/SkillsAssessmentSquashTechnicalInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/graphql/SkillsAssessmentSquashTechnicalInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/jpa/entity/SkillsAssessmentSquashTechnical.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/jpa/entity/PersonalExpenseTracker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/repositories/SkillsAssessmentSquashTechnicalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/repositories/SkillsAssessmentSquashTechnicalRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/rest/SkillsAssessmentSquashTechnicalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/rest/SkillsAssessmentSquashTechnicalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ca/hccis/pocketLedger/bo/SkillsAssessmentSquashTechnicalBOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ca/hccis/pocketLedger/bo/SkillsAssessmentSquashTechnicalBOTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ca/hccis/pocketLedger/rest/SkillsAssessmentSquashTechnicalServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ca/hccis/pocketLedger/rest/SkillsAssessmentSquashTechnicalServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/jpa/entity/Expense.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/hccis/pocketLedger/jpa/entity/Expense.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,53 +86,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.TheApplication.executor": "Run",
-    "Database Script.createDatabase.sql.executor": "Run",
-    "Database Script.createDatabase1.sql.executor": "Run",
-    "JUnit.SkillsAssessmentSquashTechnicalServiceTest.executor": "Run",
-    "JavaScript Debug.index.html.executor": "Run",
-    "Maven.squash_skills [package].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Spring Boot.TheApplication.executor": "Run",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "S2",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/jhenderson145300/Documents/GitHub/cis2232_f26_project_henderson_jake/Project/personal_expense_tracker",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propCompiler",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.TheApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.createDatabase.sql.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.createDatabase1.sql.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SkillsAssessmentSquashTechnicalServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.squash_skills [package].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TheApplication.executor&quot;: &quot;Run&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/jhenderson145300/Documents/GitHub/cis2232_f26_project_henderson_jake/Project/personal_expense_tracker&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ],
-    "RunConfigurationTargetLRU": [
-      "b60683e5-721a-4744-8191-aafa53944307",
-      "fa7dea25-c5e1-42f5-8507-f4b65e3ca148"
+    &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;b60683e5-721a-4744-8191-aafa53944307&quot;,
+      &quot;fa7dea25-c5e1-42f5-8507-f4b65e3ca148&quot;
     ],
-    "com.intellij.ide.scratch.LRUPopupBuilder$1/": [
-      "MariaDB",
-      "MySQL"
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/&quot;: [
+      &quot;MariaDB&quot;,
+      &quot;MySQL&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Bitbucket\cis2232_20252026_project_maclean_bj_squash\Project\squash_skills_tracker\src\main\resources\templates\report" />
@@ -155,8 +141,11 @@
       <recent name="C:\Bitbucket\cis2232_20252026_project_maclean_bj_squash\Project\squash_skills_tracker\src\main\java\ca\hccis\squash\bo" />
       <recent name="C:\Bitbucket\cis2232_20252026_project_maclean_bj_squash\Project\squash_skills_tracker\src\main\java\ca" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ca.hccis.pocketLedger.bo" />
+    </key>
   </component>
-  <component name="RunManager" selected="Database Script.createDatabase.sql">
+  <component name="RunManager" selected="Spring Boot.TheApplication">
     <configuration name="createDatabase1.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/src/main/resources/db/mysql/createDatabase1.sql" />
       <script-mode>FILE</script-mode>
@@ -273,6 +262,9 @@
       <workItem from="1790967257918" duration="1869000" />
       <workItem from="1790971639080" duration="593000" />
       <workItem from="1792156278246" duration="361000" />
+      <workItem from="1794575214855" duration="49000" />
+      <workItem from="1794576902311" duration="2997000" />
+      <workItem from="1794579942574" duration="101000" />
     </task>
     <servers />
   </component>
