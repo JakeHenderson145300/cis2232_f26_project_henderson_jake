@@ -19,6 +19,13 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
             <div class="navbar-item has-dropdown is-hoverable">
+                <a th:href="@{/expense}" href="/expense" class="accent navbar-link">Expenses</a>
+                <div class="accent-background navbar-dropdown">
+                    <a th:href="@{/expense}" class="accent navbar-item">View</a>
+                    <a th:href="@{/expense/list/edit}" class="accent navbar-item">List Edit</a>
+                </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
                 <a th:href="@{/skillsassessmentsquashtechnical}" href="/skillsassessmentsquashtechnical/" class="accent navbar-link">Assessments</a>
                 <div class="accent-background navbar-dropdown">
                     <a th:href="@{/skillsassessmentsquashtechnical}" class="accent navbar-item">View</a>

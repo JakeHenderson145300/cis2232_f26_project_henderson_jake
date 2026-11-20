@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<!--Thanks to Ferhad, Francisco, and Carter from grad 2022 for the styling on this page.-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <title id="pageTitle" th:text="${session.title}">Topic List</title>
+</head>
+<body>
+<nav th:replace="fragments/navHeader :: navbar"></nav>
+<div class="container my-4">
+    <h2 class="mb-3 text-center title">Expense List Edit</h2>
+    <h2 class="mb-3 text-center error" th:if="${not #strings.isEmpty(messageError)}" th:text="${messageError}">Message
+        from controller</h2>
+    <h2 class="mb-3 text-center success" th:if="${not #strings.isEmpty(messageSuccess)}" th:text="${messageSuccess}">
+        Message success from controller</h2>
+
+    <div class="table-responsive">
+        <form action="#" th:action="@{/expense/list/edit/submit}" th:object="${form}"
+              method="post">
+            <fieldset>
+                <div class="mb-3">
+                    <input type="submit" id="submitButton" class="btn btn-success text-white" value="Save" />
+                    <input type="reset" id="resetButton" name="reset" class="btn btn-secondary text-white" value="Reset" />
+                </div>
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Expense Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Recurring</th>
+                        <th>Essential</th>
+                        <th>Notes</th>
+                        <th>Remaining Budget</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="current,itemStat : ${form.expenses}">
+                        <td><input class="form-control form-control-sm" readonly th:field="*{expenses[__${itemStat.index}__].id}" /></td>
+                        <td><input type="date" class="form-control form-control-sm" th:field="*{expenses[__${itemStat.index}__].expenseDate}" /></td>
+                        <td><input class="form-control form-control-sm" th:field="*{expenses[__${itemStat.index}__].description}" /></td>
+                        <td><input class="form-control form-control-sm" th:field="*{expenses[__${itemStat.index}__].category}" /></td>
+                        <td><input type="number" step="0.01" class="form-control form-control-sm" th:field="*{expenses[__${itemStat.index}__].amount}" /></td>
+                        <td><input class="form-control form-control-sm" th:field="*{expenses[__${itemStat.index}__].paymentMethod}" /></td>
+                        <td class="text-center"><input type="checkbox" th:field="*{expenses[__${itemStat.index}__].isRecurring}" /></td>
+                        <td class="text-center"><input type="checkbox" th:field="*{expenses[__${itemStat.index}__].isEssential}" /></td>
+                        <td><input class="form-control form-control-sm" th:field="*{expenses[__${itemStat.index}__].notes}" /></td>
+                        <td><input class="form-control form-control-sm" readonly th:field="*{expenses[__${itemStat.index}__].remainingBudget}" /></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(form.expenses)}">
+                        <td colspan="10" class="text-center text-muted py-4">No expenses found</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

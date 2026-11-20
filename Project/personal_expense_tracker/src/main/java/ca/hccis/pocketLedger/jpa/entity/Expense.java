@@ -2,8 +2,7 @@ package ca.hccis.pocketLedger.jpa.entity;
 
 import ca.hccis.pocketLedger.util.CisUtility;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.ColumnDefault;
 
 /**
@@ -22,27 +21,28 @@ public class Expense {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @NotBlank(message = "Expense date is required.")
     @Size(max = 10)
-    @NotNull
     @Column(name = "expenseDate", nullable = false, length = 10)
     private String expenseDate;
 
-    @Size(max = 100)
-    @NotNull
+    @NotBlank(message = "Description is required.")
+    @Size(max = 100, message = "Description must be 100 characters or less.")
     @Column(name = "description", nullable = false, length = 100)
     private String description;
 
+    @NotBlank(message = "Please select a category.")
     @Size(max = 50)
-    @NotNull
     @Column(name = "category", nullable = false, length = 50)
     private String category;
 
-    @NotNull
+    @NotNull(message = "Amount is required.")
+    @DecimalMin(value = "0.01", message = "Amount must be greater than $0.00.")
     @Column(name = "amount", nullable = false)
     private Double amount;
 
+    @NotBlank(message = "Please select a payment method.")
     @Size(max = 50)
-    @NotNull
     @Column(name = "paymentMethod", nullable = false, length = 50)
     private String paymentMethod;
 
@@ -54,7 +54,7 @@ public class Expense {
     @Column(name = "isEssential", nullable = false)
     private Boolean isEssential = false;
 
-    @Size(max = 255)
+    @Size(max = 255, message = "Notes cannot exceed 255 characters.")
     @Column(name = "notes")
     private String notes;
 

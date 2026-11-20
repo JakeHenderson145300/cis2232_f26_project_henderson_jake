@@ -14,7 +14,7 @@ use cis2232_pocket_ledger;
 -- ------------------------------------------------------------------------------
 
 CREATE TABLE expenses (
-                              id                 int(5) NOT NULL AUTO_INCREMENT,
+                              id                 int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
                               expenseDate        varchar(10) NOT NULL COMMENT 'yyyy-MM-dd',
                               description        varchar(100) NOT NULL COMMENT 'Purchase label text',
                               category           varchar(50) NOT NULL COMMENT 'Groceries, School, Entertainment, etc.',
@@ -22,8 +22,8 @@ CREATE TABLE expenses (
                               paymentMethod      varchar(50) NOT NULL COMMENT 'Cash, Debit, Credit Card, etc.',
                               isRecurring        boolean NOT NULL DEFAULT FALSE COMMENT 'Does billing repeat monthly',
                               isEssential        boolean NOT NULL DEFAULT FALSE COMMENT 'Is it a critical Need vs Want',
-                              notes              varchar(255) NULL COMMENT 'Optional transaction annotations',
-                              PRIMARY KEY (id)
+                              notes              varchar(255) COMMENT 'Optional transaction annotations',
+                              remainingBudget    double(10, 2) NOT NULL DEFAULT 2000.00
 ) COMMENT 'This table holds personal finance transaction details';
 
 INSERT INTO expenses (id, expenseDate, description, category, amount, paymentMethod, isRecurring, isEssential, notes)
